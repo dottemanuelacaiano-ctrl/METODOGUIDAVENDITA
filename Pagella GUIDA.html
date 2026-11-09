@@ -1,0 +1,321 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pagella GUIDA</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Cormorant+Garamond:wght@600;700&display=swap">
+<style>
+/* Layout: colonna unica da telefono. Identità, riepilogo live, fasi GUIDA, KPI, riflessione, priorità, invio. */
+:root{
+  --bg:#F3F5F8; --card:#FFFFFF; --ink:#14233A; --muted:#55657A; --line:#D9E0E8;
+  --brand:#1A3A5C; --brand-soft:#E4ECF5; --on-brand:#FFFFFF; --gold:#8A6D00; --gold-soft:#FBF3D6;
+  --good:#1B6B43; --good-bg:#DFF1E6; --warn:#8A5A00; --warn-bg:#FCEFD0; --bad:#A3231B; --bad-bg:#FADFDC;
+  --font:'Carlito',Calibri,Arial,sans-serif; --display:'Cormorant Garamond',Georgia,serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1926; --card:#162638; --ink:#E8EEF5; --muted:#9DB0C4; --line:#2A3E54;
+    --brand:#8DB4DD; --brand-soft:#1C3249; --on-brand:#0E1926; --gold:#E3C65A; --gold-soft:#2E2A14;
+    --good:#6FD39C; --good-bg:#14301F; --warn:#F0BC5E; --warn-bg:#392C10; --bad:#FF8F85; --bad-bg:#3D1B19;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1926; --card:#162638; --ink:#E8EEF5; --muted:#9DB0C4; --line:#2A3E54;
+  --brand:#8DB4DD; --brand-soft:#1C3249; --on-brand:#0E1926; --gold:#E3C65A; --gold-soft:#2E2A14;
+  --good:#6FD39C; --good-bg:#14301F; --warn:#F0BC5E; --warn-bg:#392C10; --bad:#FF8F85; --bad-bg:#3D1B19;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.45;-webkit-text-size-adjust:100%;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 56px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.eyebrow{margin:0;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+h1{margin:2px 0 4px;font-family:var(--display);font-size:42px;line-height:1.05;color:var(--brand);text-wrap:balance}
+h2{margin:6px 0 0;font-size:19px;color:var(--brand)}
+.lead{margin:0;color:var(--muted);font-size:16px;max-width:60ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+label,.lbl{font-size:15px;font-weight:700}
+select,input[type=text],input[type=number],textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+textarea{min-height:76px;resize:vertical}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.hint{font-size:14px;color:var(--muted)}
+.sum{display:flex;flex-direction:column;gap:10px}
+.score-row{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.score{font-family:var(--display);font-size:60px;font-weight:700;line-height:1;color:var(--brand);font-variant-numeric:tabular-nums}
+.score small{font-family:var(--font);font-size:18px;color:var(--muted);font-weight:400}
+.pill{display:inline-block;border-radius:999px;padding:3px 12px;font-size:14px;font-weight:700;background:var(--brand-soft);color:var(--brand)}
+.pill.good{background:var(--good-bg);color:var(--good)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--brand);transition:width .2s}
+.item{display:flex;flex-direction:column;gap:8px}
+.item-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.item h3{margin:0;font-size:18px}
+.item p{margin:2px 0 0;font-size:15px;color:var(--muted)}
+.val{font-size:30px;font-weight:700;min-width:2ch;text-align:right;font-variant-numeric:tabular-nums;color:var(--brand)}
+.val.empty{color:var(--muted)}
+input[type=range]{width:100%;height:34px;margin:0;accent-color:var(--brand)}
+.scale{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:-6px}
+.tip{font-size:15px;background:var(--brand-soft);border-radius:8px;padding:8px 10px}
+.tip b{color:var(--brand)}
+.prio{display:flex;flex-direction:column;gap:4px}
+.prio h3{margin:0;font-size:17px}
+.prio p{margin:0;font-size:15px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;font-weight:700;border-radius:10px;padding:12px 18px;cursor:pointer}
+button.main{background:var(--brand);color:var(--on-brand);border:0}
+button.main:disabled{opacity:.45;cursor:not-allowed}
+button.alt{background:transparent;color:var(--brand);border:1px solid var(--brand)}
+.msg{font-size:15px;min-height:1.4em}
+.msg.ok{color:var(--good);font-weight:700}
+.msg.err{color:var(--bad);font-weight:700}
+textarea.fallback{min-height:170px;font:14px/1.4 monospace}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.foot{font-size:13px;color:var(--muted);text-align:center}
+@media (max-width:420px){.row2{grid-template-columns:1fr}h1{font-size:36px}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Metodo GUIDA · Team building</p>
+    <h1>Pagella GUIDA</h1>
+    <p class="lead">Valuta come lavori oggi, da 0 a 10. Non è un esame: serve a confrontare il tuo sguardo con quello di Elena e a scegliere cosa allenare nelle prossime due settimane.</p>
+  </header>
+
+  <section class="card" aria-label="Chi sei">
+    <div class="row2">
+      <div class="field">
+        <label for="who">Il tuo nome</label>
+        <select id="who">
+          <option value="">Scegli…</option>
+          <option>Elena G</option><option>Elena B</option><option>Filippo</option><option>Silvia</option><option>Annalisa</option><option>Altro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="store">Il tuo negozio</label>
+        <select id="store">
+          <option>Firenze Calzaiuoli</option><option>Palermo Forum</option><option>Roma</option><option>Milano</option><option>Altro</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" id="otherWrap" hidden>
+      <label for="other">Nome e cognome</label>
+      <input type="text" id="other" autocomplete="off">
+    </div>
+  </section>
+
+  <section class="card sum" aria-live="polite" aria-label="Riepilogo">
+    <div class="score-row">
+      <div class="score"><span id="avg">–</span><small>/10</small></div>
+      <span class="pill" id="band">Muovi i cursori</span>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+    <div class="hint" id="sumline">Media delle fasi che hai valutato. Le fasi non toccate restano fuori.</div>
+    <div class="hint">0–5 da allenare · 6–7 in crescita · 8–10 consolidato</div>
+  </section>
+
+  <h2>Le fasi del Metodo GUIDA</h2>
+  <div id="phases" style="display:flex;flex-direction:column;gap:12px"></div>
+
+  <h2>I KPI GUIDA</h2>
+  <div id="kpis" style="display:flex;flex-direction:column;gap:12px"></div>
+
+  <h2>In due righe</h2>
+  <section class="card" aria-label="Riflessione">
+    <div class="field"><label for="r1">Un cliente che non ho portato a casa: cosa avrei potuto fare io, prima della sua risposta?</label><textarea id="r1"></textarea></div>
+    <div class="field"><label for="r2">La fase che voglio allenare nelle prossime due settimane</label><textarea id="r2"></textarea></div>
+    <div class="field"><label for="r3">Cosa mi serve dal team o da Elena</label><textarea id="r3"></textarea></div>
+  </section>
+
+  <h2>Le tue priorità</h2>
+  <div id="prios" style="display:flex;flex-direction:column;gap:12px"></div>
+
+  <input class="hp" type="text" id="gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <div class="actions">
+    <button class="main" id="send" type="button" disabled>Invia a Emanuela</button>
+    <button class="alt" id="copy" type="button">Copia la pagella</button>
+  </div>
+  <div class="msg" id="msg" role="status"></div>
+  <textarea class="fallback" id="fallback" hidden readonly aria-label="Testo pagella da copiare"></textarea>
+  <p class="foot">© MR CORPORATE – Human Skills &amp; Performance · Metodo GUIDA</p>
+</div>
+
+<script>
+var ENDPOINT = "https://formspree.io/f/mrevawew";
+
+var PHASES = [
+ {id:"accogli", t:"Accogli", f:"Fase 1 · Guardare", d:"Guardo il cliente e capisco che tipo è. Lo saluto con un sorriso e la frase di libertà guidata.",
+  low:"Accolgo ogni ingresso, senza scegliere: saluto con sorriso e frase di libertà guidata nei primi secondi.",
+  mid:"La frase c'è ma non sempre con calore. Faccio caso a sorriso e sguardo nei primi 3 secondi.",
+  hi:"Accoglienza naturale: la mantengo su tutti gli ingressi, anche nei giorni di poca energia."},
+ {id:"avvicina", t:"Avvicina", f:"Fase 2 · Unire", d:"Resto vicino con presenza, senza insistere e senza distrarmi.",
+  low:"Dopo 10–15 secondi avvicino il prodotto che il cliente guarda e lo faccio toccare o indossare.",
+  mid:"Resto vicino senza distrarmi e senza insistere: presenza discreta, sguardo sul cliente e sul prodotto.",
+  hi:"Vicinanza efficace: la tengo e la mostro alle colleghe nello shadow."},
+ {id:"chiedi", t:"Chiedi", f:"Fase 3 · Indagare", d:"Faccio domande aperte per capire gusti e bisogni, poi ascolto.",
+  low:"Sostituisco le domande chiuse con una aperta al presente: «Che cosa sta cercando oggi?». Poi taccio e ascolto.",
+  mid:"Faccio almeno una domanda aperta prima di mostrare il primo prodotto e riformulo ciò che dice il cliente.",
+  hi:"Domande aperte efficaci: passo ad approfondire bisogni e leve di acquisto."},
+ {id:"leve", t:"Bisogni e leve", f:"Fase 3 · Indagare, approfondimento", d:"Capisco il bisogno vero, la motivazione all'acquisto e come decide il cliente.",
+  low:"Distinguo il bisogno dichiarato da quello reale: chiedo motivazione, occasione e cosa conta di più. Annoto una leva per cliente.",
+  mid:"Raccolgo almeno due leve per cliente e le uso nella proposta.",
+  hi:"Analisi dei bisogni solida: la uso per costruire proposte su misura."},
+ {id:"disegna", t:"Disegna", f:"Fase 4 · Disegnare", d:"Propongo 2, al massimo 3 prodotti, con abbinamenti e una frase di pre-chiusura.",
+  low:"Propongo al massimo 2–3 prodotti coerenti con quello che ha detto il cliente, senza molte opzioni sul tavolo.",
+  mid:"Aggiungo un abbinamento (cross-selling) e una frase di pre-chiusura.",
+  hi:"Proposta mirata e abbinamenti naturali: alleno la pre-chiusura."},
+ {id:"accompagna", t:"Accompagna", f:"Fase 5 · Accompagnare", d:"Preparo la chiusura, accompagno il cliente alla cassa e uso domande di accelerazione.",
+  low:"Non aspetto che decida da solo: preparo il setting di chiusura, accompagno alla cassa e metto lì gli oggetti scelti.",
+  mid:"Uso una domanda di accelerazione («Preferisce il nero o il cognac?») e una tecnica di chiusura.",
+  hi:"Chiusura guidata efficace: la tengo anche con clienti di passaggio con poco tempo."}
+];
+var vals = {};          // fase -> voto (assente = non valutata)
+var kv = {upt:"", scon:"", tre:null, sem:null, shadow:""};
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+function bandOf(v){ return v<=5?"bad":(v<=7?"warn":"good"); }
+function bandName(v){ return v<=5?"Da allenare":(v<=7?"In crescita":"Consolidato"); }
+function tipOf(p,v){ return v<=5?p.low:(v<=7?p.mid:p.hi); }
+function touched(){ return PHASES.filter(function(p){ return vals[p.id]!==undefined; }); }
+function avg(){ var t=touched(); if(!t.length) return null; var s=0; t.forEach(function(p){s+=vals[p.id];}); return s/t.length; }
+function who(){ var w=$("who").value; return w==="Altro" ? ($("other").value.trim()||"Altro") : w; }
+
+function renderPhases(){
+  var h="";
+  PHASES.forEach(function(p){
+    h+='<section class="card item" id="c-'+p.id+'">'+
+      '<div class="item-head"><div><h3>'+esc(p.t)+'</h3><p><b>'+esc(p.f)+'</b></p><p>'+esc(p.d)+'</p></div><div class="val empty" id="v-'+p.id+'">–</div></div>'+
+      '<input type="range" min="0" max="10" step="1" value="5" id="r-'+p.id+'" aria-label="Voto '+esc(p.t)+'">'+
+      '<div class="scale"><span>0</span><span>5</span><span>10</span></div>'+
+      '<div id="t-'+p.id+'"></div></section>';
+  });
+  $("phases").innerHTML=h;
+  PHASES.forEach(function(p){
+    var r=$("r-"+p.id);
+    function on(){ vals[p.id]=parseInt(r.value,10); upd(p); refresh(); }
+    r.addEventListener("input",on); r.addEventListener("change",on);
+  });
+}
+function upd(p){
+  var v=vals[p.id], el=$("v-"+p.id);
+  if(v===undefined){ el.textContent="–"; el.className="val empty"; $("t-"+p.id).innerHTML=""; return; }
+  el.textContent=v; el.className="val";
+  $("t-"+p.id).innerHTML='<span class="pill '+bandOf(v)+'">'+bandName(v)+'</span> <div class="tip" style="margin-top:8px"><b>Micro-step:</b> '+esc(tipOf(p,v))+'</div>';
+}
+
+function uptStatus(x){ if(!isFinite(x)||x<=0) return null; return x>=1.8?["good","Target raggiunto"]:(x>=1.5?["warn","Sopra il minimo, sotto il target"]:["bad","Sotto il minimo di 1,5"]); }
+function sconStatus(x){ if(!isFinite(x)||x<=0) return null; return x>=600?["good","Target raggiunto"]:(x>=450?["warn","In avvicinamento al target"]:["bad","Lontano dal target"]); }
+function treStatus(v){ return v>=8?["good","Solido"]:(v>=5?["warn","Discontinuo"]:["bad","Da costruire"]); }
+function semStatus(v){ return v>=5?["good","Quasi sempre in verde"]:(v>=3?["warn","Discontinuo"]:["bad","Poco in verde"]); }
+function shStatus(v){ return v>=1?["good","Obiettivo rispettato: almeno 1 a settimana"]:["bad","Sotto l'obiettivo di 1 a settimana"]; }
+function pill(s){ return s?'<span class="pill '+s[0]+'">'+esc(s[1])+'</span>':'<span class="hint">Inserisci un valore</span>'; }
+
+function renderKpis(){
+  $("kpis").innerHTML=
+   '<section class="card item"><div class="field"><label for="upt">UPT: pezzi per scontrino, nel mese</label>'+
+     '<input type="number" id="upt" inputmode="decimal" step="0.01" min="0" placeholder="es. 1,54"><div class="hint">Target 1,80 · minimo 1,50. Se non lo sai, lascia vuoto.</div></div><div id="s-upt">'+pill(null)+'</div></section>'+
+   '<section class="card item"><div class="field"><label for="scon">Scontrino medio personale, nel mese (€)</label>'+
+     '<input type="number" id="scon" inputmode="decimal" step="1" min="0" placeholder="es. 480"><div class="hint">Target 600 €. Se non lo sai, lascia vuoto.</div></div><div id="s-scon">'+pill(null)+'</div></section>'+
+   '<section class="card item"><div class="item-head"><div><h3>Le 3 azioni</h3><p>Su 10 clienti che entrano, a quanti faccio Accogli, Avvicina e Chiedi?</p></div><div class="val empty" id="v-tre">–</div></div>'+
+     '<input type="range" min="0" max="10" step="1" value="5" id="tre" aria-label="Clienti su 10 con le tre azioni"><div class="scale"><span>0</span><span>5</span><span>10</span></div><div id="s-tre"></div></section>'+
+   '<section class="card item"><div class="item-head"><div><h3>Semaforo giornaliero</h3><p>Nell\'ultima settimana, in quanti giorni di lavoro sono stato in verde (3 azioni su ogni ingresso)?</p></div><div class="val empty" id="v-sem">–</div></div>'+
+     '<input type="range" min="0" max="6" step="1" value="3" id="sem" aria-label="Giorni in verde"><div class="scale"><span>0</span><span>3</span><span>6</span></div><div id="s-sem"></div></section>'+
+   '<section class="card item"><div class="field"><label for="shadow">Shadow: quanti ne ho fatti o ricevuti nell\'ultima settimana?</label>'+
+     '<select id="shadow"><option value="">Scegli…</option><option value="0">Nessuno</option><option value="1">1</option><option value="2">2</option><option value="3">3 o più</option></select><div class="hint">Obiettivo: almeno 1 a settimana su una vendita.</div></div><div id="s-shadow"></div></section>';
+
+  $("upt").addEventListener("input",function(){ kv.upt=this.value; var x=parseFloat(String(this.value).replace(",",".")); $("s-upt").innerHTML=pill(uptStatus(x)); });
+  $("scon").addEventListener("input",function(){ kv.scon=this.value; var x=parseFloat(String(this.value).replace(",",".")); $("s-scon").innerHTML=pill(sconStatus(x)); });
+  [["tre",treStatus],["sem",semStatus]].forEach(function(a){
+    var el=$(a[0]);
+    function on(){ var v=parseInt(el.value,10); kv[a[0]]=v; $("v-"+a[0]).textContent=v; $("v-"+a[0]).className="val"; $("s-"+a[0]).innerHTML=pill(a[1](v)); }
+    el.addEventListener("input",on); el.addEventListener("change",on);
+  });
+  $("shadow").addEventListener("change",function(){ kv.shadow=this.value; $("s-shadow").innerHTML=this.value===""?"":pill(shStatus(parseInt(this.value,10))); });
+}
+
+function lowest(){
+  return touched().filter(function(p){return vals[p.id]<8;}).sort(function(a,b){return vals[a.id]-vals[b.id];}).slice(0,2);
+}
+function renderPrios(){
+  var low=lowest(), t=touched(), h="";
+  if(!t.length){ h='<section class="card prio"><p class="hint">Valuta almeno una fase: qui compaiono le due da allenare per prime.</p></section>'; }
+  else if(!low.length){ h='<section class="card prio"><h3>Nessuna fase sotto 8</h3><p>Mantieni le abitudini e confrontati con Elena nello shadow.</p></section>'; }
+  low.forEach(function(p,i){
+    var v=vals[p.id];
+    h+='<section class="card prio"><h3>'+(i+1)+'. '+esc(p.t)+' · '+v+'/10</h3><p>'+esc(tipOf(p,v))+'</p><p class="hint">Obiettivo a 30 giorni: '+Math.min(10,v+2)+'/10.</p></section>';
+  });
+  $("prios").innerHTML=h;
+}
+function refresh(){
+  var a=avg(), t=touched();
+  if(a===null){ $("avg").textContent="–"; $("band").textContent="Muovi i cursori"; $("band").className="pill"; $("barfill").style.width="0"; $("sumline").textContent="Media delle fasi che hai valutato. Le fasi non toccate restano fuori."; }
+  else{
+    $("avg").textContent=a.toFixed(1); $("band").textContent=bandName(Math.round(a)); $("band").className="pill "+bandOf(Math.round(a));
+    $("barfill").style.width=(a*10)+"%";
+    var s=t.slice().sort(function(x,y){return vals[y.id]-vals[x.id];});
+    $("sumline").textContent=t.length+" fasi su 6 valutate · punto di forza: "+s[0].t+(t.length>1?" · da allenare: "+s[s.length-1].t:"");
+  }
+  renderPrios(); gate();
+}
+function gate(){ $("send").disabled = !($("who").value && touched().length>0); }
+
+function buildText(){
+  var d=new Date().toLocaleDateString("it-IT"), a=avg(), L=[];
+  L.push("PAGELLA GUIDA - "+who()+" - "+$("store").value+" - "+d);
+  L.push("Media fasi: "+(a===null?"n.d.":a.toFixed(1)+"/10")+" ("+touched().length+" fasi su 6 valutate)","","FASI DEL METODO GUIDA");
+  PHASES.forEach(function(p){ L.push("- "+p.t+" ("+p.f+"): "+(vals[p.id]===undefined?"non valutata":vals[p.id]+"/10")); });
+  L.push("","KPI GUIDA");
+  L.push("- UPT nel mese: "+(kv.upt||"non indicato")+" (target 1,80, minimo 1,50)");
+  L.push("- Scontrino medio personale: "+(kv.scon?kv.scon+" €":"non indicato")+" (target 600 €)");
+  L.push("- Clienti su 10 con le 3 azioni: "+(kv.tre===null?"non indicato":kv.tre+"/10"));
+  L.push("- Giorni in verde nell'ultima settimana: "+(kv.sem===null?"non indicato":kv.sem+"/6"));
+  L.push("- Shadow nell'ultima settimana: "+(kv.shadow===""?"non indicato":kv.shadow));
+  L.push("","IN DUE RIGHE");
+  L.push("Cliente non portato a casa, cosa avrei potuto fare io: "+($("r1").value.trim()||"-"));
+  L.push("Fase da allenare nelle prossime due settimane: "+($("r2").value.trim()||"-"));
+  L.push("Cosa mi serve dal team o da Elena: "+($("r3").value.trim()||"-"));
+  L.push("","PRIORITÀ");
+  var low=lowest(); if(!low.length) L.push("Nessuna fase sotto 8.");
+  low.forEach(function(p,i){ L.push((i+1)+". "+p.t+" ("+vals[p.id]+"/10): "+tipOf(p,vals[p.id])); });
+  return L.join("\n");
+}
+function setMsg(t,c){ var m=$("msg"); m.textContent=t; m.className="msg"+(c?" "+c:""); }
+
+$("who").addEventListener("change",function(){ $("otherWrap").hidden = this.value!=="Altro"; gate(); });
+$("send").addEventListener("click",function(){
+  if($("gotcha").value){ return; }
+  var btn=this; btn.disabled=true; setMsg("Invio in corso…","");
+  var a=avg(), payload={
+    _subject:"Pagella GUIDA - "+who()+" - "+$("store").value,
+    nome:who(), negozio:$("store").value, data:new Date().toLocaleDateString("it-IT"),
+    media_fasi:a===null?"":a.toFixed(1), messaggio:buildText()
+  };
+  PHASES.forEach(function(p){ payload["fase_"+p.id]=vals[p.id]===undefined?"":vals[p.id]; });
+  payload.upt=kv.upt; payload.scontrino_medio=kv.scon; payload.clienti_3_azioni=kv.tre===null?"":kv.tre;
+  payload.giorni_verde=kv.sem===null?"":kv.sem; payload.shadow_settimana=kv.shadow;
+  fetch(ENDPOINT,{method:"POST",headers:{"Accept":"application/json","Content-Type":"application/json"},body:JSON.stringify(payload)})
+   .then(function(r){ if(!r.ok) throw new Error("http "+r.status); setMsg("Pagella inviata a Emanuela. Grazie!","ok"); })
+   .catch(function(){ setMsg("Invio non riuscito. Usa «Copia la pagella» e mandala a Emanuela.","err"); gate(); });
+});
+$("copy").addEventListener("click",function(){
+  var txt=buildText(), fb=$("fallback");
+  function show(){ fb.hidden=false; fb.value=txt; fb.focus(); fb.select(); setMsg("Seleziona e copia il testo qui sotto.",""); }
+  try{ navigator.clipboard.writeText(txt).then(function(){ fb.hidden=true; setMsg("Pagella copiata.","ok"); },show); }catch(e){ show(); }
+});
+
+renderPhases(); renderKpis(); refresh();
+</script>
+</body>
+</html>
+
+</body></html>
